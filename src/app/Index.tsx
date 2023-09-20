@@ -1,8 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Onboarding from "../processes/onboarding/Onboarding";
-import TestingPage from "../pages/TestingPage";
 import Authentication from "../pages/Authentication";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
+
 
 import { createStackNavigator } from "@react-navigation/stack";
 export const Index = () => {
@@ -11,8 +11,8 @@ export const Index = () => {
     <NavigationContainer independent={true}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Onboarding" component={Onboarding} />
-        <Stack.Screen name="TestingPage" component={TestingPage} />
         <Stack.Screen name="Authentication" component={Authentication} />
+        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
       </Stack.Navigator>
     </NavigationContainer>
   );

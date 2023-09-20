@@ -1,5 +1,3 @@
-// SignInScreen.tsx
-
 import {
   View,
   StyleSheet,
@@ -7,50 +5,105 @@ import {
   Image,
   KeyboardAvoidingView,
   Pressable,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { H2, Body } from "../shared/ui/TextStyles/TextStyles";
 import { ButtonActive } from "../shared/ui/button/Buttons";
+import { useForm, Controller } from "react-hook-form";
 
-const SignInForm: React.FC = () => {
+interface Props {
+  onSubmit: (data: FormData) => void;
+}
+
+type FormData = {
+  email: string;
+  password: string;
+};
+
+const SignInForm: React.FC<Props> = () => {
+  const { control, handleSubmit, getValues } = useForm<FormData>();
+
+  const handleButtonPress = () => {
+    const formData = getValues();
+    console.log("Form Data:", formData);
+  };
+
   return (
     <View style={styles.main}>
-      <KeyboardAvoidingView style={styles.body}>
-        <View style={styles.header}>
-          <H2 style={{ textAlign: "center", color: "#404040" }}>Login</H2>
-        </View>
-        <View style={styles.inputWrapper}>
-          <Body style={{ textAlign: "left", color: "#404040" }}>
-            Email Adress
-          </Body>
-          <View style={styles.input}>
-            <Image
-              style={styles.image}
-              source={require("../../assets/SquaresFour.png")}
-            />
-            <TextInput
-              placeholder="Enter Email adress"
-              style={{ fontSize: 16, width: 280 }}
-            />
+      <KeyboardAvoidingView
+        style={styles.body}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.footer}>
+            <View style={styles.header}>
+              <H2 style={{ textAlign: "center", color: "#404040" }}>Login</H2>
+            </View>
+            <View style={styles.inputWrapper}>
+              <Body style={{ textAlign: "left", color: "#404040" }}>
+                Email Address
+              </Body>
+              <View style={styles.input}>
+                <Image
+                  style={styles.image}
+                  source={require("../../assets/SquaresFour.png")}
+                />
+
+                <Controller
+                  control={control}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      placeholder="Enter Email Address"
+                      onBlur={onBlur}
+                      onChangeText={(value) => onChange(value)}
+                      value={value}
+                      style={{ fontSize: 16, width: 280 }}
+                    />
+                  )}
+                  name="email"
+                  defaultValue=""
+                  rules={{ required: "This field is required" }}
+                />
+              </View>
+            </View>
+            <View style={styles.inputWrapper}>
+              <Body style={{ textAlign: "left", color: "#404040" }}>
+                Password
+              </Body>
+              <View style={styles.input}>
+                <Image
+                  style={styles.image}
+                  source={require("../../assets/SquaresFour.png")}
+                />
+
+                <Controller
+                  control={control}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      placeholder="Enter Password"
+                      onBlur={onBlur}
+                      onChangeText={(value) => onChange(value)}
+                      value={value}
+                      style={{ fontSize: 16, width: 280 }}
+                      secureTextEntry
+                    />
+                  )}
+                  name="password"
+                  defaultValue=""
+                  rules={{ required: "This field is required" }}
+                />
+              </View>
+            </View>
+            <View style={styles.button}>
+              <ButtonActive
+                text="Login"
+                onPress={handleSubmit(handleButtonPress)}
+              />
+            </View>
           </View>
-        </View>
-        <View style={styles.inputWrapper}>
-          <Body style={{ textAlign: "left", color: "#404040" }}>
-            Password
-          </Body>
-          <View style={styles.input}>
-            <Image
-              style={styles.image}
-              source={require("../../assets/SquaresFour.png")}
-            />
-            <TextInput
-              placeholder="Enter Password"
-              style={{ fontSize: 16, width: 280 }}
-            />
-          </View>
-        </View>
-        <View style={styles.button}>
-          <ButtonActive text="Login" />
-        </View>
+        </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
       <View style={styles.footer}>
         <Pressable>
@@ -76,9 +129,8 @@ const styles = StyleSheet.create({
   },
   header: {
     display: "flex",
-    alignItems: "center",
-    marginBottom: 32,
-    marginTop: 152
+    height: 115,
+    justifyContent: "flex-end",
   },
   body: {
     display: "flex",
@@ -104,9 +156,10 @@ const styles = StyleSheet.create({
     margin: 16,
   },
   button: {
-    marginTop: 30,
+    height: 58,
   },
   footer: {
-    
-  }
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center" },
 });

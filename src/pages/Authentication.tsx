@@ -6,7 +6,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 const Tab = createMaterialTopTabNavigator();
 
-const Authentication: React.FC = () => {
+export const Authentication: React.FC = () => {
   const [fontLoaded] = useFonts({
     Regular: require("../../assets/fonts/Poppins-Regular.ttf"),
   });
@@ -43,7 +43,7 @@ const Authentication: React.FC = () => {
           options={{ tabBarLabel: "Login" }}
         />
         <Tab.Screen
-          name="Signp"
+          name="SingUp"
           component={SignUpForm}
           options={{ tabBarLabel: "Registration" }}
         />
