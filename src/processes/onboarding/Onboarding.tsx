@@ -32,7 +32,6 @@ export const OnboardingSlider: React.FC = () => {
   const navigation = useNavigation<OnboardingSliderNavigationProp>();
   const { width, height } = useWindowDimensions();
   const flatListRef = useRef<FlatList>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
   const handleNext = () => {
@@ -158,3 +157,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+

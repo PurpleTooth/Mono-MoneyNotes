@@ -3,7 +3,6 @@ import Onboarding from "../processes/onboarding/Onboarding";
 import Authentication from "../pages/Authentication";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 
-
 import { createStackNavigator } from "@react-navigation/stack";
 export const Index = () => {
   const Stack = createStackNavigator();

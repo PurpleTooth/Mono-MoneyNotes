@@ -22,7 +22,7 @@ type FormData = {
   password: string;
 };
 
-const SignInForm: React.FC<Props> = () => {
+const SignInForm: React.FC = () => {
   const { control, handleSubmit, getValues } = useForm<FormData>();
 
   const handleButtonPress = () => {
@@ -159,7 +159,8 @@ const styles = StyleSheet.create({
     height: 58,
   },
   footer: {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center" },
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });

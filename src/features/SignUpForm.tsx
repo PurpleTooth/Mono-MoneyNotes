@@ -11,19 +11,20 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { H2, Body } from "../shared/ui/TextStyles/TextStyles";
-import { ButtonActive } from "../shared/ui/button/Buttons";
+import { ButtonActive, ButtonRemove } from "../shared/ui/button/Buttons";
 import { useForm, Controller } from "react-hook-form";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useAddUserMutation } from "../shared/api/usersApi";
 
 type RootStackParamList = {
   Home: undefined;
   Details: { itemId: number };
-  Authentication: undefined;
+  PrivacyPolicy: undefined;
 };
 
 type OnboardingSliderNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "Authentication"
+  "PrivacyPolicy"
 >;
 
 interface Props {
@@ -37,11 +38,28 @@ type FormData = {
 };
 
 const SignUpForm: React.FC = () => {
-  const { control, handleSubmit, getValues } = useForm<FormData>();
+  const {
+    control,
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors, isValid },
+  } = useForm<FormData>();
   const navigation = useNavigation<OnboardingSliderNavigationProp>();
+  const [addUser, { isError, isSuccess, error }] = useAddUserMutation();
   const handleButtonPress = () => {
     const formData = getValues();
-    console.log("Form Data:", formData);
+    addUser({ email: formData.email, password: formData.password }).unwrap();
+  };
+  if (isError) {
+    console.error(error);
+  }
+  if (isSuccess) {
+    console.log("succes");
+  }
+
+  const goToPrivacy = () => {
+    navigation.navigate("PrivacyPolicy");
   };
 
   return (
@@ -138,16 +156,23 @@ const SignUpForm: React.FC = () => {
               </View>
             </View>
             <View style={styles.button}>
-              <ButtonActive
-                text="Create account"
-                onPress={handleSubmit(handleButtonPress)}
-              />
+              {isValid ? (
+                <ButtonActive
+                  text="Create account"
+                  onPress={handleSubmit(handleButtonPress)}
+                />
+              ) : (
+                <ButtonRemove
+                  text="Create account"
+                  onPress={() => console.error("Заполните все поля")}
+                />
+              )}
             </View>
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
       <View style={styles.footer}>
-        <Pressable onPress={() => navigation.navigate("PrivacyPolicy")}>
+        <Pressable onPress={() => goToPrivacy()}>
           <Body style={{ textAlign: "center", color: "#A6A6A6" }}>
             Explore privacy policy
           </Body>

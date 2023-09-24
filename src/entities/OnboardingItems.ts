@@ -5,7 +5,7 @@ interface Slide {
   image: any;
 }
 
-export const slides:Slide[]  = [
+export const slides: Slide[] = [
   {
     id: 1,
     title: "Easy to add new transaction",

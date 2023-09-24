@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "oleg@outlook.com",
+      "passwod": "oleg123"
+    },
+    {
+      "id": 2,
+      "name": "seveneleven@yandex.ru",
+      "passwod": "seveneleven123"
+    },
+    {
+      "id": 3,
+      "name": "wtf@mail.ru",
+      "passwod": "wtf123"
+    },
+    {
+      "email": "123",
+      "password": "123",
+      "id": 4
+    },
+    {
+      "email": "Rtff",
+      "password": "rff",
+      "id": 5
+    }
+  ]
+}
